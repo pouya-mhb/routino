@@ -10,34 +10,30 @@
             {% csrf_token %}
             <h1 class="h3 mb-3 fw-normal">Please Register</h1>
 
-            <div class="form-floating">
-                <input type="text" class="form-control" id="firstname" placeholder="name@example.com">
-                <label for="floatingInput">First Name</label>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">F name</label>
+                <input name="firstName" type="text" class="form-control" id="firstname" aria-describedby="emailHelp">
             </div>
-            <div class="form-floating">
-                <input type="text" class="form-control" id="lastname" placeholder="name@example.com">
-                <label for="floatingInput">Last Name</label>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">L name</label>
+                <input name="lastName" type="text" class="form-control" id="lastname">
             </div>
-            <div class="form-floating">
-                <input type="text" class="form-control" id="username" placeholder="name@example.com">
-                <label for="floatingInput">UserName</label>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">U name</label>
+                <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                    required>
             </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Pass</label>
+                <input name="password" type="password" class="form-control" id="password" required>
 
-            <div class="checkbox mb-3">
-                <label>
-                    <span>
-                        Already Have an account ?
-                        <a type="submit" href="{% url 'login' %}" method='GET' class="btn btn-primary">Login</a>
-                    </span>
-                </label>
-            </div>
-            {% buttons %}
-            <button type="submit" class="btn btn-primary" method="POST">Register</button>
-            {% endbuttons %}
+                <div>
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary" method="POST">Register</button>
+                    {% endbuttons %}
+                    Already Have an account ?
+                    <a type="submit" href="{% url 'login' %}" method='GET' class="">Login</a>
+                </div>
         </form>
     </main>
 
