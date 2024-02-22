@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress</title>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Log out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div action="{% url 'overview' %}" id="activities" class="container-sm rtl">
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">کارکرد ها</h5>
+                <div id="activities" class="rtl">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                تاریخ
+                            </th>
+                            <th>
+                                ساعت شروع
+                            </th>
+                            <th>
+                                ساعت پایان
+                            </th>
+                            <th>
+                                نوع کار
+                            </th>
+                            <th>
+                                توضیحات
+                            </th>
+                        </tr>
+                        {% for activity in activities %}
+                        <tr>
+                            <td>
+                                {{activity.date}}
+                            </td>
+                            <td>
+                                {{activity.time_start}}
+                            </td>
+                            <td>
+                                {{activity.time_end}}
+                            </td>
+                            <td>
+                                {% if activity.is_remote %}
+                                دورکاری
+                                {% elif activity.is_remote is False%}
+                                حضوری
+                                {% endif%}
+                            </td>
+                            <td>
+                                {{activity.descriptions}} | {{activity.user.first_name}}
+                            </td>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br>
+        <a href="{% url 'new-activity' %}" class="btn btn-primary">ثبت کارکرد جدید</a>
+        <a href="{% url 'home' %}" class="btn btn-primary">Return Home</a>
+    </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}
