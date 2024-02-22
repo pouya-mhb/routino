@@ -36,7 +36,7 @@ class RegisterForm(ModelForm):
 
 class LoginForm(ModelForm):
     username = forms.CharField(
-        max_length=200, min_length=4, required=True, label='نام کاربری',
+        max_length=200, min_length=4, required=True, label='User Name',
         widget=forms.TextInput(
             attrs={'id': 'username',
                    'class': 'form-control',
@@ -44,7 +44,7 @@ class LoginForm(ModelForm):
         )
     )
     password = forms.CharField(
-        max_length=200, min_length=4, required=True, label='رمز عبور',
+        max_length=200, min_length=4, required=True, label='Password',
         widget=forms.TextInput(
             attrs={'id': 'password',
                    'class': 'form-control',
