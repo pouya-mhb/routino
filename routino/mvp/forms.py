@@ -9,8 +9,8 @@ class ActivityForm(forms.Form):
     class Meta():
         model = Activity
         fields = [
-            'status',
             'title',
+            'status',
             'desciption'
         ]
 
