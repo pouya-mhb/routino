@@ -1,0 +1,32 @@
+{% extends 'Base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+
+{% for goal in goals %}
+<h2>
+    Goals
+</h2>
+<h3>
+    {{ goal.title }}
+</h3>
+{% endfor %}
+<hr>
+{% for routine in routines %}
+<h2>
+    Routines
+</h2>
+<h3>
+    {{ routine.title}}
+</h3>
+{% endfor %}
+<hr>
+<h2>
+    Activities
+</h2>
+{% for activity in activities %}
+<h3>
+    {{ activity.title }}
+</h3>
+{% endfor %}
+
+{% endblock %}
