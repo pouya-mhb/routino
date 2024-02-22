@@ -25,6 +25,8 @@ def register(request):
         userRegisterForm = RegisterForm()
         return render(request, "Register.html", {"RegisterForm": userRegisterForm, 'title': 'Register'})
 
+    # todo : profile builder
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -36,7 +38,7 @@ def user_login(request):
             return redirect('home')
         else:
             messages.add_message(request, messages.INFO,
-                                 "نام کاربری یا رمز عبور اشتباه است")
+                                 "wrong user / pass")
             return redirect('login')
     else:
         LoginForm()
@@ -62,7 +64,7 @@ def get_home(request):
 
 
 def home(request):
-
+    current_user = request.user
     goals = RoutineGoal.objects.all()
     users = User.objects.all()
     profiles = Profile.objects.all()
@@ -82,9 +84,13 @@ def home(request):
 
 @login_required
 def myProgress(request):
-    routines = Routine.objects.all()
+    current_user = request.user
     context = {
-        'routines': routines,
+        'user_fullname': f"{current_user.first_name} {current_user.last_name}",
+        # 'activities': Activity.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
+        # 'routines': Routine.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
+        # nothing is binded to user, everything is binded to profile
+        # todo : create profile when user has been registered
     }
     return render(
         request, 'MyProgress.html', context)
