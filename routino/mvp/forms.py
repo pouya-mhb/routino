@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.db.models import fields
 from django.forms.models import ModelForm
-from .models import Profile, Activity, Routine, RoutineGoal
+from .models import Profile, Activity, Routine, Goal
 
 
 class ActivityForm(forms.Form):
@@ -71,9 +71,9 @@ class Routineform (ModelForm):
         ]
 
 
-class RoutineGoalForm (ModelForm):
+class GoalForm (ModelForm):
     class Meta():
-        model = RoutineGoal
+        model = Goal
         fields = [
             'status',
             'goal_duration',
