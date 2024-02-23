@@ -19,12 +19,13 @@ from mvp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
     path('register', views.register, name='register'),
     path('login', views.user_login, name='login'),
     path('logout', views.user_logout, name='logout'),
-    path('', views.home, name='home'),
     # path('new-activity', views.new_activity, name='new-activity'),
     path('myProgress', views.myProgress, name='myProgress'),
+    path('profile', views.profile, name='user_profile'),
 ]
 
 
