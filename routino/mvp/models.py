@@ -19,6 +19,19 @@ class Profile (models.Model):
     age = models.IntegerField(default=18)
     gender = models.CharField(choices=gender_choices, max_length=6)
 
+    def __str__(self):
+        return self.userName
+
+
+class ActivityType (models.Model):
+    subject = models.CharField(max_length=250)
+    title = models.CharField(max_length=250)
+    desciption = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
 
 class Activity (models.Model):
     STATUS_CHOICES = (
@@ -28,17 +41,34 @@ class Activity (models.Model):
         ('done', 'Done'),
     )
 
+    FREQUENCY_CHOICES = (
+        ('always', 'always'),
+        ('usually', 'usually'),
+        ('often', 'often'),
+        ('sometimes', 'sometimes'),
+    )
+
+    type = models.ForeignKey(ActivityType,
+                             on_delete=models.CASCADE)
+
     profile = models.ForeignKey(Profile,
                                 on_delete=models.CASCADE)
 
     status = models.CharField(
         max_length=100, choices=STATUS_CHOICES, default='new')
 
+    frequency = models.CharField(
+        max_length=100, choices=FREQUENCY_CHOICES, default='always'
+    )
+
     title = models.CharField(max_length=250)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
     desciption = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 class Routine (models.Model):
@@ -63,6 +93,9 @@ class Routine (models.Model):
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
     desciption = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 class RoutineGoal (models.Model):
@@ -98,3 +131,6 @@ class RoutineGoal (models.Model):
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
     desciption = models.TextField()
+
+    def __str__(self):
+        return self.title
