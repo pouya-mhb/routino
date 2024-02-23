@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, redirect
-from .forms import Routineform, RoutineGoalForm, ActivityForm, LoginForm, ProfileForm, RegisterForm
-from .models import Profile, Activity, Routine, RoutineGoal
+from .forms import Routineform, GoalForm, ActivityForm, LoginForm, ProfileForm, RegisterForm
+from .models import Profile, Activity, Routine, Goal
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -68,13 +68,14 @@ def get_home(request):
 
 def home(request):
     current_user = request.user
-    goals = RoutineGoal.objects.all()
+    goals = Goal.objects.all()
     users = User.objects.all()
     profiles = Profile.objects.all()
     routines = Routine.objects.all()
     activities = Activity.objects.all()
 
     home_context = {
+        'current_user': current_user,
         'users': users,
         'goals': goals,
         'profiles': profiles,
@@ -86,11 +87,28 @@ def home(request):
 
 
 @login_required
+def profile(request):
+    current_user = request.user
+    user_profile = Profile.objects.get(user_profile=current_user)
+    # profile_firstName = Profile.objects.filter(user_profile.firstName)
+    profile_context = {
+        # 'profile_firstName': profile_firstName
+
+    }
+
+    if request.method == 'post':
+        pass
+    else:
+        return render(request, "Profile.html", profile_context)
+
+
+@login_required
 def myProgress(request):
     current_user = request.user
     context = {
         'user_fullname': f"{current_user.first_name} {current_user.last_name}",
-        # 'activities': Activity.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
+        # 'goals': Goal.objects.filter(),
+        'activities': Activity.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
         # 'routines': Routine.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
         # nothing is binded to user, everything is binded to profile
         # todo : create profile when user has been registered
