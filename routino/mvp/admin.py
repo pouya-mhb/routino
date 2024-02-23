@@ -25,7 +25,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = [
         'title',
         'status',
-        'goal_duration',
+        'frequency',
         'profile',
         'start_date',
         'end_date',

@@ -76,7 +76,7 @@ class GoalForm (ModelForm):
         model = Goal
         fields = [
             'status',
-            'goal_duration',
+            'frequency',
             'title',
             'desciption'
         ]
