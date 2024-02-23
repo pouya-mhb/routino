@@ -3,10 +3,16 @@
 {% block content %}
 
 <title>{{title}}</title>
+<style>
+    .middle {
+        margin: 1rem auto;
+        width: 15rem;
+    }
+</style>
 
 <body class="text-center">
     <main class="form-signin w-100 m-auto">
-        <form method="POST">
+        <form class="middle" method="POST">
             {% csrf_token %}
             <h1 class="h3 mb-3 fw-normal">Please Register</h1>
 

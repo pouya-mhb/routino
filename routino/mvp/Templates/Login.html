@@ -2,7 +2,12 @@
 {% load bootstrap5 %}
 {% block content %}
 
-
+<style>
+    .middle {
+        margin: 1rem auto;
+        width: 15rem;
+    }
+</style>
 
 <!-- Custom styles for this template -->
 <link href="signin.css" rel="stylesheet">
@@ -10,7 +15,7 @@
 <body class="text-center form-signin w-100 m-auto">
 
     <main class="form-signin w-100 m-auto">
-        <form class="" method="POST">
+        <form class="middle" method="POST">
             {% csrf_token %}
             {% bootstrap_form loginForm %}
             {% buttons %}
