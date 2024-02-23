@@ -26,6 +26,8 @@ urlpatterns = [
     # path('new-activity', views.new_activity, name='new-activity'),
     path('myProgress', views.myProgress, name='myProgress'),
     path('profile', views.profile, name='user_profile'),
+    path('leaderBoard', views.score_calculation, name='score_calculation'),
+
 ]
 
 

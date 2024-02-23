@@ -1,0 +1,167 @@
+{% extends 'Base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+
+<main class="container" style="padding: 5%;">
+    <div class="bd-example-snippet bd-code-snippet">
+        <div class="bd-example">
+            <h2>
+                Leader Board
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Frequency Score</th>
+                        <th scope="col">Status Score</th>
+                        <th scope="col">Activity Score</th>
+                        <th scope="col">Overall Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <th scope="row">{{activity.profile.user_profile.id}}</th>
+                        <td>
+                            {{activity.profile.user_profile.username}}
+                        </td>
+                        <td>
+                            {{activity.score}}
+                        </td>
+                        <td>
+                            {{goal.activity.score}}
+                        </td>
+                        <td>
+                            {{goal.activity.score}}
+                        </td>
+                        <td>
+                            {{goal.activity.score}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="bd-example">
+            <h2>
+                Goal Table
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Goal</th>
+                        <th scope="col">Frequency</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Activities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for goal in goals %}
+                    <tr>
+                        <th scope="row">{{goal.profile.user_profile.id}}</th>
+                        <td>
+                            {{goal.profile}}
+                        </td>
+                        <td>
+                            {{goal.title}}
+                        </td>
+                        <td>
+                            {{goal.frequency}}
+                        </td>
+                        <td>
+                            {{goal.status}}
+                        </td>
+                        <td>
+                            {{goal.routine}}
+                        </td>
+                        <td>
+                            {{goal.activity}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="bd-example">
+            <h2>
+                Routine Table
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Routine</th>
+                        <th scope="col">Activities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for routine in routines %}
+                    <tr>
+                        <th scope="row">{{routine.profile.user_profile.id}}</th>
+                        <td>
+                            {{routine.profile}}
+                        </td>
+                        <td>
+                            {{routine.title}}
+                        </td>
+                        <td>
+                            {{routine.activity}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="bd-example">
+            <h2>
+                Activity Table
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Activities</th>
+                        <th scope="col">Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <th scope="row">{{activity.profile.user_profile.id}}</th>
+                        <td>
+                            {{activity.profile}}
+                        </td>
+                        <td>
+                            {{activity.category}}
+                        </td>
+                        <td>
+                            {{activity.type}}
+                        </td>
+                        <td>
+                            {{activity.status}}
+                        </td>
+                        <td>
+                            {{activity.frequency}}
+                        </td>
+                        <td>
+                            {{activity.title}}
+                        </td>
+                        <td>
+                            {{activity.score}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}

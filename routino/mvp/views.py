@@ -142,3 +142,27 @@ def match_making(user, routine):
     pass
 
     # todo : profile builder
+
+
+def score_calculation(request):
+    activities = Activity.objects.all()
+    activity_frequency_score = 1
+    activity_status_score = 2
+    activity_score = Activity.objects.get(Activity.score)
+    activity_category_score = 4
+    activity_type_score = 5
+    overall_score = activity_frequency_score * activity_status_score * \
+        activity_score * activity_category_score * activity_type_score
+
+    score_context = {
+        'activities': activities,
+        'activity_frequency_score': activity_frequency_score,
+        'activity_status_score': activity_status_score,
+        'activity_score': activity_score,
+        'activity_category_score': activity_category_score,
+        'activity_type_score': activity_type_score,
+        'overall_score': overall_score
+    }
+
+    return render(
+        request, 'LeaderBoard.html', score_context)
