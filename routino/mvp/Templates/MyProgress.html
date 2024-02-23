@@ -2,9 +2,7 @@
 {% load bootstrap5 %}
 {% block content %}
 
-<h1>
-    Welcome {{ user_fullname }}
-</h1>
+
 
 
 <style>
@@ -59,32 +57,28 @@
         -webkit-overflow-scrolling: touch;
     }
 </style>
-
 <div class="album py-5 bg-light">
     <div class="container">
+        <h1>
+            Welcome {{ user_fullname }}
+        </h1>
+        <h2>
+            Your Activities
+        </h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for post in posts %}
+            {% for activity in activities %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                        preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>{{ post.title }}</title>
-                        <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                            dy=".3em">{{ post.title }}</text>
-                    </svg>
-
+                    <div class="card-header">
+                        {{ activity.type }}
+                    </div>
                     <div class="card-body">
-                        <h3>{{ post.title }}</h3>
-                        <p>wtritten by {{ post.author }} at {{ post.publish_date }}</p>
-                        <p class="card-text">{{ post.summary }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </div>
-                            <small class="text-muted">Reading time : {{ post.reading_time }} mins</small>
-                        </div>
+                        <h5 class="card-title">{{ activity.title }}</h5>
+                        <p class="card-text">{{ activity.description }}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ activity.created_date }}
                     </div>
                 </div>
             </div>
