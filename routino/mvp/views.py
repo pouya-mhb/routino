@@ -20,12 +20,15 @@ def register(request):
         user.first_name = firstName
         user.last_name = lastName
         user.save()
+
+        user_profile = Profile.objects.create(
+            user_profile=user, firstName=firstName, lastName=lastName, userName=username)
+        user_profile.save()
+
         return redirect('login')
     else:
         userRegisterForm = RegisterForm()
         return render(request, "Register.html", {"RegisterForm": userRegisterForm, 'title': 'Register'})
-
-    # todo : profile builder
 
 
 def user_login(request):
@@ -112,3 +115,12 @@ def myProgress(request):
 #             return redirect("overview")
 #         else:
 #             return HttpResponseBadRequest()
+
+def match_making(user, routine):
+    # if type_user_routine_1 = type_user_routine_2
+    # if requency_user_routine_1 = requency_user_routine_2
+    # user_1 match to user_2
+
+    pass
+
+    # todo : profile builder
