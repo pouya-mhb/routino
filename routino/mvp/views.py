@@ -96,11 +96,13 @@ def home(request):
 @login_required
 def profile(request):
     current_user = request.user
-    user_profile = Profile.objects.get(user_profile=current_user)
-    # profile_firstName = Profile.objects.filter(user_profile.firstName)
-    profile_context = {
-        # 'profile_firstName': profile_firstName
+    profile = Profile.objects.get(user_profile=current_user)
 
+    profile_context = {
+        'user_fullname': f"{profile.firstName} {profile.lastName}",
+        'username': profile.userName,
+        'age': profile.age,
+        'gender': profile.gender
     }
 
     if request.method == 'post':
@@ -184,7 +186,6 @@ def score_calculation(request):
                             frequency_score = frequency.score
                             activity_score = category_score * \
                                 subcategory_score * status_score * frequency_score
-
 
     score_context = {
         'profiles': profiles,
