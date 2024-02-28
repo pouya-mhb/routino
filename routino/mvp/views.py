@@ -2,11 +2,12 @@ from django.http import HttpResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from .forms import Routineform, GoalForm, ActivityForm, LoginForm, ProfileForm, RegisterForm
-from .models import Profile, Activity, Routine, Goal
+from .models import Profile, Activity, Routine, Goal, Category, SubCategory, Frequency, Status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 def register(request):
@@ -20,15 +21,19 @@ def register(request):
         user.first_name = firstName
         user.last_name = lastName
         user.save()
-
-        user_profile = Profile.objects.create(
-            user_profile=user, firstName=firstName, lastName=lastName, userName=username)
-        user_profile.save()
+        profile_builder(request, user)
 
         return redirect('login')
     else:
         userRegisterForm = RegisterForm()
         return render(request, "Register.html", {"RegisterForm": userRegisterForm, 'title': 'Register'})
+
+
+def profile_builder(request, user):
+
+    user_profile = Profile.objects.create(
+        user_profile=user, firstName=user.first_name, lastName=user.last_name, userName=user.username)
+    user_profile.save()
 
 
 def user_login(request):
@@ -83,6 +88,8 @@ def home(request):
         'activities': activities
     }
 
+    # overall_score =
+
     return render(request, "Home.html", home_context)
 
 
@@ -105,14 +112,28 @@ def profile(request):
 @login_required
 def myProgress(request):
     current_user = request.user
+
+    goals = Goal.objects.filter(
+        profile=Profile.objects.get(user_profile=current_user))
+
+    routines = Routine.objects.filter(
+        profile=Profile.objects.get(user_profile=current_user))
+
+    activities = Activity.objects.filter(
+        profile=Profile.objects.get(user_profile=current_user))
+
+    for activity in activities:
+        activity_score = activity.frequency.score * activity.status.score * \
+            activity.category.score * activity.type.score
+
     context = {
         'user_fullname': f"{current_user.first_name} {current_user.last_name}",
-        # 'goals': Goal.objects.filter(),
-        'activities': Activity.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
-        # 'routines': Routine.objects.filter(profile=Profile.objects.get(user_profile=current_user)),
-        # nothing is binded to user, everything is binded to profile
-        # todo : create profile when user has been registered
+        'goals': goals,
+        'routines': routines,
+        'activities': activities,
+        'activity_score': activity_score
     }
+
     return render(
         request, 'MyProgress.html', context)
 
@@ -141,27 +162,38 @@ def match_making(user, routine):
 
     pass
 
-    # todo : profile builder
-
 
 def score_calculation(request):
+    profiles = Profile.objects.all()
     activities = Activity.objects.all()
-    activity_frequency_score = 1
-    activity_status_score = 2
-    activity_score = Activity.objects.get(Activity.score)
-    activity_category_score = 4
-    activity_type_score = 5
-    overall_score = activity_frequency_score * activity_status_score * \
-        activity_score * activity_category_score * activity_type_score
+    categories = Category.objects.all()
+    subcategories = SubCategory.objects.all()
+    frequencies = Frequency.objects.all()
+    statuses = Status.objects.all()
+
+    for profile in profiles:
+        for activity in activities:
+            for category in categories:
+                for subCategory in subcategories:
+                    for frequency in frequencies:
+                        for status in statuses:
+                            # username = profile.userName
+                            status_score = status.score
+                            category_score = category.score
+                            subcategory_score = subCategory.score
+                            frequency_score = frequency.score
+                            activity_score = category_score * \
+                                subcategory_score * status_score * frequency_score
+
 
     score_context = {
+        'profiles': profiles,
         'activities': activities,
-        'activity_frequency_score': activity_frequency_score,
-        'activity_status_score': activity_status_score,
-        'activity_score': activity_score,
-        'activity_category_score': activity_category_score,
-        'activity_type_score': activity_type_score,
-        'overall_score': overall_score
+        'category_score': category_score,
+        'sub_category_score': subcategory_score,
+        'status_score': status_score,
+        'frequency_score': frequency_score,
+        'activity_score': activity_score
     }
 
     return render(
