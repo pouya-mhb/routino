@@ -88,7 +88,7 @@
                                 </span>
                             </p>
                             <p class="card-text">{{goal.desciption}}</p>
-                            <a href="#" class="btn btn-primary">Details</a>
+                            <a href="#Routines" class="btn btn-primary">Details</a>
                         </div>
                         <div class="card-footer text-muted">
                             Created at : {{ goal.created_date }}
@@ -101,7 +101,7 @@
         <hr>
         <br>
         <div>
-            <h2>
+            <h2 id="Routines">
                 Your Routines
             </h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -127,7 +127,7 @@
                                 </span>
                             </p>
                             <p class="card-text">{{routine.desciption}}</p>
-                            <a href="#" class="btn btn-primary">Details</a>
+                            <a href="#Activities" class="btn btn-primary">Details</a>
                         </div>
                         <div class="card-footer text-muted">
                             Created at : {{ routine.created_date }}
@@ -140,7 +140,7 @@
         <hr>
         <br>
         <div>
-            <h2>
+            <h2 id="Activities">
                 Your Activities
             </h2>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -149,22 +149,25 @@
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <span></span>
-                            {{ activity.type }}
+                            <h4>{{ activity.title }}</h4>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ activity.title }}</h5>
+                            <h5 class="card-title">Activity Score : {{ activity_score }}</h5>
                             <!-- <p>
                                 I {{ activity.frequency }} do {{ activity.type }} {{ activity.category }}
                             </p> -->
                             <p>
                                 <span>
-                                    Frequency : {{ activity.frequency }}
+                                    Frequency : {{ activity.frequency }} - {{ activity.frequency.score }}
                                 </span><br>
                                 <span>
-                                    Category : {{ activity.category }}
+                                    status : {{ activity.status }} - {{ activity.status.score }}
                                 </span><br>
                                 <span>
-                                    Type : {{ activity.type }}
+                                    Category : {{ activity.category }} - {{ activity.category.score }}
+                                </span><br>
+                                <span>
+                                    Type : {{ activity.type }} - {{ activity.type.score }}
                                 </span>
                             </p>
                             <p class="card-text">Description : {{ activity.description }}</p>
