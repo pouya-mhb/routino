@@ -1,7 +1,6 @@
 {% extends 'Base.html' %}
 {% load bootstrap5 %}
 {% block content %}
-
 <main class="container" style="padding: 5%;">
     <div class="bd-example-snippet bd-code-snippet">
         <div class="bd-example">
@@ -20,14 +19,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for activity in activities %}
+                    {% for goal in goals %}
                     <tr>
-                        <th scope="row">{{activity.profile.user_profile.id}}</th>
+                        <th scope="row">{{goal.profile.user_profile.id}}</th>
                         <td>
-                            {{activity.profile.user_profile.username}}
+                            {{goal.profile.user_profile.username}}
                         </td>
                         <td>
-                            {{activity.score}}
+                            {{goal.activity.score}}
                         </td>
                         <td>
                             {{goal.activity.score}}
