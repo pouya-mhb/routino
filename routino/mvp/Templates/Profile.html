@@ -1,10 +1,43 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
 {% block content %}
-
-
+<br><br><br>
 <h1>
-    Profile
+    Welcome {{ user_fullname }}
 </h1>
 
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3>
+                        {{ user_fullname }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Routine : {{ username }}</h5>
+                    <h6>
+                        {{ age }} Years Old
+                    </h6>
+                    <p class="card-text">
+                        <span>
+                            {{gender}}
+                        </span>
+
+                    </p>
+                </div>
+                <div class="card-footer text-muted">
+                    <!-- Created at : {{ goal.created_date }} -->
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            Column
+        </div>
+        <div class="col">
+            Column
+        </div>
+    </div>
+</div>
 {% endblock %}
