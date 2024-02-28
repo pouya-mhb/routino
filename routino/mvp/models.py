@@ -89,28 +89,6 @@ class Frequency (models.Model):
     def __str__(self):
         return self.title
 
-    # FREQUENCY_CHOICES = (
-    #     ('always', 'always'),
-    #     ('usually', 'usually'),
-    #     ('often', 'often'),
-    #     ('sometimes', 'sometimes'),
-    # )
-
-    # title = models.CharField(
-    #     max_length=100, choices=FREQUENCY_CHOICES, default='always'
-    # )
-
-    # FREQUENCY_SCORE_CHOICES = (
-    #     ('always', 100),
-    #     ('usually', 80),
-    #     ('often', 50),
-    #     ('sometimes', 30),
-    # )
-
-    # score = models.CharField(
-    #     max_length=100, choices=FREQUENCY_SCORE_CHOICES, default='always'
-    # )
-
 
 class SubCategory(models.Model):
 
@@ -122,38 +100,6 @@ class SubCategory(models.Model):
 
     def __str__(self):
         return self.title
-
-    # type_choices = (
-    #     ('exercising', 'exercising'),
-    #     ('running', 'running'),
-    #     ('cycling', 'cycling'),
-    #     ('gym', 'gym'),
-    #     ('green diet', 'green diet'),
-    #     ('low fat diet', 'low fat diet'),
-    #     ('only meet diet', 'only meet diet'),
-    #     ('studying', 'studying'),
-    #     ('reading', 'reading'),
-    #     ('attending courses', 'attending courses')
-    # )
-
-    # title = models.CharField(
-    #     max_length=100, choices=type_choices, default='')
-
-    # type_choices_score = (
-    #     ('exercising', 10),
-    #     ('running', 10),
-    #     ('cycling', 15),
-    #     ('gym', 20),
-    #     ('green diet', 30),
-    #     ('low fat diet', 35),
-    #     ('only meet diet', 100),
-    #     ('studying', 1000),
-    #     ('reading', 500),
-    #     ('attending courses', 700)
-    # )
-
-    # type_score = models.CharField(
-    #     max_length=100, choices=type_choices_score, default='')
 
 
 class Activity (models.Model):
@@ -171,22 +117,38 @@ class Activity (models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
 
-    # def activity_score_calculator(request, frequency_score, category_score, status_score, type_score):
-    #     activity_score = frequency_score * category_score * status_score * type_score
+    # score = Category.objects.get() * SubCategory.score * \
+    #     Frequency.score * Status.score
 
+    def __str__(self):
+        return self.title
+
+    # def score_calculation():
+
+    #     activities = Activity.objects.all()
+    #     categories = Category.objects.all()
+    #     subcategories = SubCategory.objects.all()
+    #     frequencies = Frequency.objects.all()
+    #     statuses = Status.objects.all()
+
+    #     for activity in activities:
+    #         for category in categories:
+    #             for subCategory in subcategories:
+    #                 for frequency in frequencies:
+    #                     for status in statuses:
+    #                         status_score = status.score
+    #                         category_score = category.score
+    #                         subcategory_score = subCategory.score
+    #                         frequency_score = frequency.score
+    #                         activity_score = category_score * \
+    #                             subcategory_score * status_score * frequency_score
     #     return activity_score
-
-    # score = activity_score_calculator(
-    #     Frequency().objects.filter(), Category().objects.get('score'), Status().objects.get('score'), Type.objects.get('score'))
 
     def __str__(self):
         return self.title
 
 
 class Routine (models.Model):
-    # def get_profile_id ():
-    #     Profile.objects.get(id)
-
     profile = models.ForeignKey(Profile,
                                 on_delete=models.CASCADE,
                                 related_name='routine_profile',
@@ -206,49 +168,22 @@ class Routine (models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     desciption = models.TextField()
 
-    def __str__(self):
-        return self.title
-
 
 class Goal(models.Model):
-
-    # STATUS_CHOICES = (
-    #     ('new', 'New'),
-    #     ('committed', 'Committed'),
-    #     ('doing', 'Doing'),
-    #     ('done', 'Done'),
-    # )
-
-    # status = models.CharField(
-    #     max_length=100, choices=STATUS_CHOICES, default='new')
-
-    # GOAL_DURATION_CHOICES = (
-    #     ('daily', 'Daily'),
-    #     ('weekly', 'Weekly'),
-    #     ('monthly', 'Monthly'),
-    #     ('annually', 'Annually'),
-    # )
-
-    # frequency = models.CharField(
-    #     max_length=100, choices=GOAL_DURATION_CHOICES, default='0')
-
-    category = models.ForeignKey(Category,
-                                 on_delete=models.CASCADE, default=1)
-
-    type = models.ForeignKey(SubCategory,
-                             on_delete=models.CASCADE, default=1)
-
-    status = models.ForeignKey(Status,
-                               on_delete=models.CASCADE, default=1)
-
-    status = models.ForeignKey(Frequency,
-                               on_delete=models.CASCADE, default=1)
+    profile = models.ForeignKey(Profile,
+                                on_delete=models.CASCADE, default=1)
 
     routine = models.ForeignKey(Routine,
                                 on_delete=models.CASCADE, default=1)
 
-    profile = models.ForeignKey(Profile,
-                                on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category,
+                                 on_delete=models.CASCADE, default=1)
+
+    subCategory = models.ForeignKey(SubCategory,
+                                    on_delete=models.CASCADE, default=1)
+
+    status = models.ForeignKey(Status,
+                               on_delete=models.CASCADE, default=1)
 
     activity = models.ForeignKey(
         Activity,
