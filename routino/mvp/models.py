@@ -29,47 +29,11 @@ class Category (models.Model):
     score = models.IntegerField(default=1)
     created_date = models.DateTimeField(default=timezone.now)
 
-    # score = models.IntegerField(default=1)
-
-    # category_choices = (
-    #     ('sport', 'sport'),
-    #     ('health', 'health'),
-    #     ('self-development', 'self-development')
-    # )
-
-    # category = models.CharField(
-    #     max_length=100, choices=category_choices, default='-')
-
-    # category_choices_score = (
-    #     ('sport', 100),
-    #     ('mindset', 100),
-    #     ('self-development', 80)
-    # )
-
-    # score = models.CharField(
-    #     max_length=100, choices=category_choices_score, default='-')
-
-    # category_choices_item = models.CharField(
-    #     max_length=250, verbose_name='category_item')
-    # def choices(category_choices_item):
-    #     choice_list = []
-    #     choice_list.append(category_choices_item)
-    #     return choice_list
-
     def __str__(self) -> str:
         return self.title
 
 
 class Status (models.Model):
-    # STATUS_CHOICES = (
-    #     ('new', 'New'),
-    #     ('committed', 'Committed'),
-    #     ('doing', 'Doing'),
-    #     ('done', 'Done'),
-    # )
-
-    # title = models.CharField(
-    #     max_length=100, choices=STATUS_CHOICES, default='new')
 
     title = models.CharField(max_length=250)
     score = models.IntegerField(default=1)
@@ -168,6 +132,9 @@ class Routine (models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     desciption = models.TextField()
 
+    def __str__(self):
+        return self.title
+
 
 class Goal(models.Model):
     profile = models.ForeignKey(Profile,
@@ -194,7 +161,7 @@ class Goal(models.Model):
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
-    desciption = models.TextField()
+    desciption = models.TextField()  # todo : correct desciption
 
     def __str__(self):
         return self.title
