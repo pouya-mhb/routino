@@ -75,8 +75,6 @@ class GoalForm (ModelForm):
     class Meta():
         model = Goal
         fields = [
-            'status',
-            'frequency',
             'title',
             'desciption'
         ]
