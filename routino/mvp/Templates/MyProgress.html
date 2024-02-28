@@ -60,28 +60,137 @@
         <h1>
             Welcome {{ user_fullname }}
         </h1>
-        <h2>
-            Your Activities
-        </h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for activity in activities %}
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        {{ activity.type }}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ activity.title }}</h5>
-                        <p class="card-text">{{ activity.description }}</p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                    <div class="card-footer text-muted">
-                        {{ activity.created_date }}
+        <div>
+            <h2>
+                Your Goals
+            </h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for goal in goals %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h3>
+                                {{ goal.title }}
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Routine : {{ goal.routine }}</h5>
+                            <h6>
+                                Activity : {{ goal.activity }}
+                            </h6>
+                            <p class="card-text">
+                                <span>
+                                    From : {{goal.start_date.date}}
+                                </span>
+                                <br>
+                                <span>
+                                    To : {{goal.end_date.date}}
+                                </span>
+                            </p>
+                            <p class="card-text">{{goal.desciption}}</p>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created at : {{ goal.created_date }}
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+        </div>
+        <hr>
+        <br>
+        <div>
+            <h2>
+                Your Routines
+            </h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for routine in routines %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h3>
+                                {{ routine.title }}
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <h6>
+                                Activity : {{ routine.activity }}
+                            </h6>
+                            <p class="card-text">
+                                <span>
+                                    From : {{routine.start_date.date}}
+                                </span>
+                                <br>
+                                <span>
+                                    To : {{routine.end_date.date}}
+                                </span>
+                            </p>
+                            <p class="card-text">{{routine.desciption}}</p>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created at : {{ routine.created_date }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+        <br>
+        <div>
+            <h2>
+                Your Activities
+            </h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for activity in activities %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <span></span>
+                            {{ activity.type }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ activity.title }}</h5>
+                            <!-- <p>
+                                I {{ activity.frequency }} do {{ activity.type }} {{ activity.category }}
+                            </p> -->
+                            <p>
+                                <span>
+                                    Frequency : {{ activity.frequency }}
+                                </span><br>
+                                <span>
+                                    Category : {{ activity.category }}
+                                </span><br>
+                                <span>
+                                    Type : {{ activity.type }}
+                                </span>
+                            </p>
+                            <p class="card-text">Description : {{ activity.description }}</p>
+                            <p class="card-text">
+                                <span>
+                                    From : {{activity.start_date.date}}
+                                </span>
+                                <br>
+                                <span>
+                                    To : {{activity.end_date.date}}
+                                </span>
+                            </p>
+
+                            <a href="#" class="btn btn-success">Like</a>
+                            <a href="#" class="btn btn-danger">Dislike</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created at : {{ activity.created_date }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
+
+
 {% endblock %}
