@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mvp import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +30,7 @@ urlpatterns = [
     path('profile', views.profile, name='user_profile'),
     path('leaderBoard', views.score_calculation, name='score_calculation'),
 
-]
-
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # todo : new goal - new routine - overview -> my progress
 #       my progress : my goals - my routines - my activities
