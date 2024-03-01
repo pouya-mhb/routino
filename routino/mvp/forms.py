@@ -30,6 +30,7 @@ class RegisterForm(ModelForm):
             'first_name',
             'last_name',
             'username',
+            'email',
             'password'
         ]
 
@@ -67,7 +68,7 @@ class Routineform (ModelForm):
         fields = [
             'activity',
             'title',
-            'desciption'
+            'description'
         ]
 
 
@@ -76,5 +77,5 @@ class GoalForm (ModelForm):
         model = Goal
         fields = [
             'title',
-            'desciption'
+            'description'
         ]
