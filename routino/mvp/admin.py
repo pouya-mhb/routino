@@ -91,7 +91,7 @@ class Goal_Admin(admin.ModelAdmin):
         'start_date',
         'end_date',
         'created_date',
-        'desciption'
+        'description'
     ]
 
     ordering = ['id']
@@ -108,5 +108,5 @@ class Routine_Admin(admin.ModelAdmin):
         'start_date',
         'end_date',
         'created_date',
-        'desciption'
+        'description'
     ]
