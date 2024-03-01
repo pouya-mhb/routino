@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
+{% load static %}
 {% block content %}
 
 <style>
@@ -9,8 +10,7 @@
     }
 </style>
 
-<!-- Custom styles for this template -->
-<link href="signin.css" rel="stylesheet">
+<link href="{% static 'signin.css' %}" rel="stylesheet">
 
 <body class="text-center form-signin w-100 m-auto">
 
