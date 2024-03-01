@@ -3,26 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Profile (models.Model):
-    user_profile = models.OneToOneField(User,
-                                        on_delete=models.CASCADE,
-                                        primary_key=True,
-                                        related_name='user_profile')
-    gender_choices = (
-        ('male', 'Male'),
-        ('female', 'Female'),
-    )
-
-    firstName = models.CharField(max_length=250, default='user_first_name')
-    lastName = models.CharField(max_length=250, default='user_last_name')
-    userName = models.CharField(max_length=250)
-    age = models.IntegerField(default=18)
-    gender = models.CharField(choices=gender_choices, max_length=6)
-
-    def __str__(self):
-        return self.userName
-
-
 class Category (models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField()
@@ -33,8 +13,9 @@ class Category (models.Model):
         return self.title
 
 
-class Status (models.Model):
+class SubCategory(models.Model):
 
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     score = models.IntegerField(default=1)
     description = models.TextField(max_length=250, default='')
@@ -54,9 +35,8 @@ class Frequency (models.Model):
         return self.title
 
 
-class SubCategory(models.Model):
+class Status (models.Model):
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     score = models.IntegerField(default=1)
     description = models.TextField(max_length=250, default='')
@@ -67,8 +47,6 @@ class SubCategory(models.Model):
 
 
 class Activity (models.Model):
-    profile = models.ForeignKey(Profile,
-                                on_delete=models.CASCADE)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
@@ -81,35 +59,32 @@ class Activity (models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
 
-    # score = Category.objects.get() * SubCategory.score * \
-    #     Frequency.score * Status.score
+    score = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
 
-    # def score_calculation():
 
-    #     activities = Activity.objects.all()
-    #     categories = Category.objects.all()
-    #     subcategories = SubCategory.objects.all()
-    #     frequencies = Frequency.objects.all()
-    #     statuses = Status.objects.all()
+class Profile (models.Model):
+    user_profile = models.OneToOneField(User,
+                                        on_delete=models.CASCADE,
+                                        primary_key=True,
+                                        related_name='user_profile')
+    gender_choices = (
+        ('male', 'Male'),
+        ('female', 'Female'),
+    )
 
-    #     for activity in activities:
-    #         for category in categories:
-    #             for subCategory in subcategories:
-    #                 for frequency in frequencies:
-    #                     for status in statuses:
-    #                         status_score = status.score
-    #                         category_score = category.score
-    #                         subcategory_score = subCategory.score
-    #                         frequency_score = frequency.score
-    #                         activity_score = category_score * \
-    #                             subcategory_score * status_score * frequency_score
-    #     return activity_score
+    firstName = models.CharField(max_length=250, default='user_first_name')
+    lastName = models.CharField(max_length=250, default='user_last_name')
+    userName = models.CharField(max_length=250)
+    age = models.IntegerField(default=18)
+    gender = models.CharField(choices=gender_choices, max_length=6)
+    activity = models.ForeignKey(Activity,
+                                 on_delete=models.CASCADE, default=1, )
 
     def __str__(self):
-        return self.title
+        return self.userName
 
 
 class Routine (models.Model):
@@ -130,7 +105,7 @@ class Routine (models.Model):
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
-    desciption = models.TextField()
+    description = models.TextField()
 
     def __str__(self):
         return self.title
@@ -152,16 +127,15 @@ class Goal(models.Model):
     status = models.ForeignKey(Status,
                                on_delete=models.CASCADE, default=1)
 
-    activity = models.ForeignKey(
-        Activity,
-        on_delete=models.CASCADE,
-        default=1)
+    activity = models.ForeignKey(Activity,
+                                 on_delete=models.CASCADE,
+                                 default=1)
 
     title = models.CharField(max_length=250)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
-    desciption = models.TextField()  # todo : correct desciption
+    description = models.TextField()  # todo : correct description
 
     def __str__(self):
         return self.title
