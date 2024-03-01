@@ -46,7 +46,29 @@ class Status (models.Model):
         return self.title
 
 
+class Profile (models.Model):
+    user_profile = models.OneToOneField(User,
+                                        on_delete=models.CASCADE,
+                                        primary_key=True,
+                                        related_name='user_profile')
+    gender_choices = (
+        ('male', 'Male'),
+        ('female', 'Female'),
+    )
+
+    firstName = models.CharField(max_length=250, default='user_first_name')
+    lastName = models.CharField(max_length=250, default='user_last_name')
+    userName = models.CharField(max_length=250)
+    age = models.IntegerField(default=18)
+    gender = models.CharField(choices=gender_choices, max_length=6)
+
+    def __str__(self):
+        return self.userName
+
+
 class Activity (models.Model):
+    profile = models.ForeignKey(Profile,
+                                on_delete=models.CASCADE)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
@@ -63,28 +85,6 @@ class Activity (models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Profile (models.Model):
-    user_profile = models.OneToOneField(User,
-                                        on_delete=models.CASCADE,
-                                        primary_key=True,
-                                        related_name='user_profile')
-    gender_choices = (
-        ('male', 'Male'),
-        ('female', 'Female'),
-    )
-
-    firstName = models.CharField(max_length=250, default='user_first_name')
-    lastName = models.CharField(max_length=250, default='user_last_name')
-    userName = models.CharField(max_length=250)
-    age = models.IntegerField(default=18)
-    gender = models.CharField(choices=gender_choices, max_length=6)
-    activity = models.ForeignKey(Activity,
-                                 on_delete=models.CASCADE, default=1, )
-
-    def __str__(self):
-        return self.userName
 
 
 class Routine (models.Model):

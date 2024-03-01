@@ -21,6 +21,7 @@ def register(request):
         user.first_name = firstName
         user.last_name = lastName
         user.save()
+        profile_builder(user)
 
         return redirect('login')
     else:
@@ -41,12 +42,11 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            profile_builder(user)
             return redirect('home')
         else:
             messages.add_message(request, messages.INFO,
                                  "wrong user / pass")
-            return redirect('profile')
+            return redirect('login')
     else:
         LoginForm()
         return render(request, "login.html", {
