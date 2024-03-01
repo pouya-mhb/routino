@@ -129,6 +129,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Activities</th>
                         <th scope="col">Title</th>
+                        <th scope="col">Score`</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -154,7 +155,7 @@
                             {{activity.title}}
                         </td>
                         <td>
-                            {{activity.score}}
+                            {{activity.profile.score}}
                         </td>
                     </tr>
                     {% endfor %}

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
+{% load static %}
 {% block content %}
+
 <br><br><br>
 <h1>
     Welcome {{ user_fullname }}
@@ -9,8 +11,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-header">
+            <div class="card shadow-sm card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="card-header d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover">
+                    <img src="{% static '/Media/Photos/shutterstock_1409500844-1.jpg' %}" alt="">
                     <h3>
                         {{ user_fullname }}
                     </h3>
