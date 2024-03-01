@@ -30,7 +30,7 @@ def register(request):
 
 
 def profile_builder(user):
-    user_profile = Profile.objects.update_or_create(
+    user_profile = Profile.objects.create(
         user_profile=user, firstName=user.first_name, lastName=user.last_name, userName=user.username)
     user_profile.save()
 
