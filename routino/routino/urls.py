@@ -25,9 +25,9 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('login', views.user_login, name='login'),
     path('logout', views.user_logout, name='logout'),
-    # path('new-activity', views.new_activity, name='new-activity'),
     path('myProgress', views.myProgress, name='myProgress'),
     path('profile', views.profile, name='user_profile'),
+    path('new-activity', views.new_activity, name=''),
     path('leaderBoard', views.score_calculation, name='score_calculation'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+<main>
+    <h1>New Activity</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <label for="activity_form">New Activity</label>
+                    <input type="text" id="activity_form" name="activity_form" value="{{activity_form}}">
+                    <input type="submit" value="OK" name="" id="">
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <h1>New Activity</h1>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
