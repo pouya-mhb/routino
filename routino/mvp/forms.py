@@ -10,7 +10,8 @@ class ActivityForm(forms.Form):
         model = Activity
         fields = [
             'title',
-            'status',
+            'start_date',
+            'end_date',
             'desciption'
         ]
 
