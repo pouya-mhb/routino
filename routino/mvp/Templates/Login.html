@@ -12,8 +12,7 @@
 
 <link href="{% static 'signin.css' %}" rel="stylesheet">
 
-<body class="text-center form-signin w-100 m-auto">
-
+<div class="container form-signin w-100 m-auto">
     <main class="form-signin w-100 m-auto">
         <form class="middle" method="POST">
             {% csrf_token %}
@@ -23,10 +22,6 @@
             <a href="{% url 'register' %}" class="btn btn-secondary">Create Account</a>
             {% endbuttons %}
         </form>
-    </main>
-
-
-
-</body>
+</div>
 
 {% endblock %}

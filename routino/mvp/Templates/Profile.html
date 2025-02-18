@@ -3,14 +3,22 @@
 {% load static %}
 {% block content %}
 
+<style>
+    .middle {
+        margin: 1rem auto;
+        width: 15rem;
+    }
+</style>
+
 <br><br><br>
 <h1>
     Welcome {{ user_fullname }}
+
 </h1>
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-4">
             <div class="card shadow-sm card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                 <div class="card-header d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover">
                     <img src="{% static '/Media/Photos/shutterstock_1409500844-1.jpg' %}" alt="">
@@ -31,15 +39,18 @@
                     </p>
                 </div>
                 <div class="card-footer text-muted">
-                    <!-- Created at : {{ goal.created_date }} -->
+                    Created at : {{ profile.created_date }}
                 </div>
             </div>
         </div>
-        <div class="col">
-            Column
-        </div>
-        <div class="col">
-            Column
+
+        <div class="col-8">
+            <form action="" method="post">
+                <br>
+                {% csrf_token %}
+                {% bootstrap_form profile_form %}
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
         </div>
     </div>
 </div>

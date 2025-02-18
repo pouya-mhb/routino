@@ -14,54 +14,46 @@
     }
 </style>
 
-<body class="text-center">
-    <main class="form-signin w-100 m-auto" style="padding: 1%;">
-        <div class="row">
-            <div class="col-8">
-                <div class="col-4">
-                    <h1 class="h3 mb-3 fw-normal">Please Register</h1>
-                </div>
-                <form class="middle">
-                    {% csrf_token %}
-                    <h1 class="h3 mb-3 fw-normal"></h1>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">F name</label>
-                        <input name="firstName" type="text" class="form-control" id="firstname"
-                            aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">L name</label>
-                        <input name="lastName" type="text" class="form-control" id="lastname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">U name</label>
-                        <input name="username" type="text" class="form-control" id="username"
-                            aria-describedby="emailHelp" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Pass</label>
-                        <input name="password" type="password" class="form-control" id="password" required>
-
-                        <div>
-                            {% buttons %}
-                            <button type="submit" class="btn btn-primary" method="POST">Register</button>
-                            {% endbuttons %}
-                            Already Have an account ?
-                            <a type="submit" href="{% url 'login' %}" method='GET' class="">Login</a>
-                        </div>
-                </form>
-            </div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="">Register</h1>
+            <img src="{% static '/Media/Photos/logo.jpg' %}" alt="" height="250" width="250">
         </div>
-    </main>
+    </div>
+</div>
+<div class="col-6">
+    <form class="middle">
+        {% csrf_token %}
+        <div class="mb-2">
+            <label for="exampleInputEmail1" class="form-label">F name</label>
+            <input name="firstName" type="text" class="form-control" id="firstname" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-2">
+            <label for="exampleInputPassword1" class="form-label">L name</label>
+            <input name="lastName" type="text" class="form-control" id="lastname">
+        </div>
+        <div class="mb-2">
+            <label for="exampleInputEmail1" class="form-label">U name</label>
+            <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" required>
+        </div>
+        <!-- <div class="mb-2">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+        </div> -->
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Pass</label>
+            <input name="password" type="password" class="form-control" id="password" required>
 
-</body>
-
-</html>
+            <div>
+                {% buttons %}
+                <button type="submit" class="btn btn-primary" method="POST">Register</button>
+                {% endbuttons %}
+                Already Have an account ?
+                <a type="submit" href="{% url 'login' %}" method='GET' class="">Login</a>
+            </div>
+    </form>
+</div>
+</div>
+</div>
 {% endblock %}
