@@ -100,18 +100,38 @@ def home(request):
 def profile(request):
     current_user = request.user
     profile = Profile.objects.get(user_profile=current_user)
+    profile_form = ProfileForm()
 
-    profile_context = {
-        'user_fullname': f"{profile.firstName} {profile.lastName}",
-        'username': profile.userName,
-        'age': profile.age,
-        'gender': profile.gender
-    }
+    # if request.method == 'post':
+    #     new_firstName = request.POST.get('firstName')
+    #     new_lastName = request.POST.get('lastName')
+    #     new_userName = request.POST.get('userName')
+    #     new_age = request.POST.get('age')
+    #     new_gender = request.POST.get('gender')
 
-    if request.method == 'post':
-        pass
-    else:
-        return render(request, "Profile.html", profile_context)
+    #     profile_form = ProfileForm(request.POST, instance=profile)
+    #     if profile_form.is_valid():
+    #         profile_form.save()
+
+    #     post_profile_context = {
+    #         'user_fullname': f"{profile.firstName} {profile.lastName}",
+    #         'username': profile.userName,
+    #         'age': profile.age,
+    #         'gender': profile.gender,
+    #         'updated_profile': profile_form
+    #     }
+
+    #     return render(request, "Profile.html", post_profile_context)
+
+    # else:
+    #     get_profile_context = {
+    #         'user_fullname': f"{profile.firstName} {profile.lastName}",
+    #         'username': profile.userName,
+    #         'age': profile.age,
+    #         'profile_form': profile_form,
+    #         'gender': profile.gender,
+    #     }
+    #     return render(request, "Profile.html", get_profile_context)
 
 
 @login_required
@@ -143,22 +163,27 @@ def myProgress(request):
         request, 'MyProgress.html', context)
 
 
-# def new_activity(request):
-#     if request.method == 'GET':
-#         activity_form = Activity()
-#         return render(request, " new-activity.html", {"activity_form": activity_form})
+def new_activity(request):
+    if request.method == 'POST':
+        pass
+    else:
+        activity_form = ActivityForm()
+        routine_form = Routineform()
+        goal_form = GoalForm()
 
-#     elif request.method == 'POST':
-#         activity_form = ActivityForm(request.POST)
-#         if activity_form.is_valid() and request.user.is_authenticated:
-#             current_user = request.user
-#             activity = activity_form.save(commit=False)
-#             activity.user = current_user
-#             activity.save()
-#             print(request.POST)
-#             return redirect("overview")
-#         else:
-#             return HttpResponseBadRequest()
+        return render(request, "new-activity.html", {"activity_form": activity_form})
+
+    # elif request.method == 'POST':
+    #     activity_form = ActivityForm(request.POST)
+    #     if activity_form.is_valid() and request.user.is_authenticated:
+    #         current_user = request.user
+    #         activity = activity_form.save(commit=False)
+    #         activity.save()
+    #         'print'(request.POST)
+    #         return redirect("new-activity")
+        # else:
+        #     return HttpResponseBadRequest()
+
 
 def match_making(user, routine):
     # if type_user_routine_1 = type_user_routine_2
