@@ -28,6 +28,8 @@ urlpatterns = [
     path('myProgress', views.myProgress, name='myProgress'),
     path('profile', views.profile, name='user_profile'),
     path('new-activity', views.new_activity, name=''),
+    path('new-goal', views.add_goal, name='goal_form'),
+    path('new-routine', views.add_routine, name='routine_form'),
     path('leaderBoard', views.score_calculation, name='score_calculation'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
