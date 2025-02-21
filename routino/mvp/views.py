@@ -208,14 +208,6 @@ def add_routine(request):
         form = RoutineForm()
     return render(request, 'routine_form.html', {'form': form})
 
-
-def match_making(user, routine):
-    # if type_user_routine_1 = type_user_routine_2
-    # if requency_user_routine_1 = requency_user_routine_2
-    # user_1 match to user_2
-
-    pass
-
 def score_calculation(request):
     profiles = Profile.objects.all()
     activities = Activity.objects.all()
@@ -233,6 +225,7 @@ def score_calculation(request):
             profile.status_score += activity.status.score
 
         profile.overall_score = profile.activity_score + profile.frequency_score + profile.status_score
+        profile.save()  # Save the updated scores
 
     score_context = {
         'profiles': profiles,
@@ -240,3 +233,35 @@ def score_calculation(request):
     }
 
     return render(request, 'LeaderBoard.html', score_context)
+
+from django.db.models import Q
+
+def match_making():
+    profiles = Profile.objects.all()
+    matches = []
+
+    for profile in profiles:
+        potential_matches = Profile.objects.filter(
+            Q(overall_score__gte=profile.overall_score - 10) &
+            Q(overall_score__lte=profile.overall_score + 10)
+        ).exclude(id=profile.id)
+
+        for potential_match in potential_matches:
+            common_goals = Goal.objects.filter(profile=profile).filter(
+                Q(category__in=Goal.objects.filter(profile=potential_match).values_list('category', flat=True)) &
+                Q(subCategory__in=Goal.objects.filter(profile=potential_match).values_list('subCategory', flat=True))
+            )
+
+            common_routines = Routine.objects.filter(profile=profile).filter(
+                Q(activity__in=Routine.objects.filter(profile=potential_match).values_list('activity', flat=True))
+            )
+
+            if common_goals.exists() and common_routines.exists():
+                matches.append((profile, potential_match))
+
+    return matches
+
+@login_required
+def view_matches(request):
+    matches = match_making()
+    return render(request, 'matches.html', {'matches': matches})

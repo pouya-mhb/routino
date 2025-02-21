@@ -31,6 +31,8 @@ urlpatterns = [
     path('new-goal', views.add_goal, name='goal_form'),
     path('new-routine', views.add_routine, name='routine_form'),
     path('leaderBoard', views.score_calculation, name='score_calculation'),
+    path('matches/', views.view_matches, name='view_matches'),
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

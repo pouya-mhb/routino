@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<main class="container" style="padding: 5%;">
+    <div class="bd-example-snippet bd-code-snippet">
+        <div class="bd-example">
+            <h2>Matched Profiles</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Profile 1</th>
+                        <th scope="col">Profile 2</th>
+                        <th scope="col">Common Goals</th>
+                        <th scope="col">Common Routines</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match in matches %}
+                    <tr>
+                        <td>{{ match.0.user_profile.username }}</td>
+                        <td>{{ match.1.user_profile.username }}</td>
+                        <td>
+                            {% for goal in match.0.goal_set.all %}
+                            {% if goal in match.1.goal_set.all %}
+                            {{ goal.title }}<br>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for routine in match.0.routine_set.all %}
+                            {% if routine in match.1.routine_set.all %}
+                            {{ routine.title }}<br>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}
