@@ -3,7 +3,7 @@
 {% block content %}
 <main class="container" style="padding: 5%;">
     <div class="bd-example-snippet bd-code-snippet">
-        <div class="bd-example">
+        <!-- <div class="bd-example">
             <h2>
                 Leader Board
             </h2>
@@ -114,7 +114,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
+        </div> -->
         <div class="bd-example">
             <h2>
                 Activity Table
@@ -157,6 +157,38 @@
                         <td>
                             {{activity.profile.score}}
                         </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<main class="container" style="padding: 5%;">
+    <div class="bd-example-snippet bd-code-snippet">
+        <div class="bd-example">
+            <h2>Leader Board</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Frequency Score</th>
+                        <th scope="col">Status Score</th>
+                        <th scope="col">Activity Score</th>
+                        <th scope="col">Overall Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profile in profiles %}
+                    <tr>
+                        <th scope="row">{{ profile.user_profile.id }}</th>
+                        <td>{{ profile.user_profile.username }}</td>
+                        <td>{{ profile.frequency_score }}</td>
+                        <td>{{ profile.status_score }}</td>
+                        <td>{{ profile.activity_score }}</td>
+                        <td>{{ profile.overall_score }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

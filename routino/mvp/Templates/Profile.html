@@ -11,31 +11,58 @@
 </style>
 
 <br><br><br>
-<h1>
-    Welcome {{ user_fullname }}
-
-</h1>
+<h1>Welcome {{ user_fullname }}</h1>
 
 <div class="container">
     <div class="row">
-        <div class="col-4">
+        <h1 class="mt-5">Profile</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName"
+                    value="{{ profile_form.firstName.value }}">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName"
+                    value="{{ profile_form.lastName.value }}">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username"
+                    value="{{ profile_form.userName.value }}">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" value="{{ profile_form.age.value }}">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female
+                    </option>
+                    <option value="Other">Other
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="">
             <div class="card shadow-sm card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                 <div class="card-header d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover">
                     <img src="{% static '/Media/Photos/shutterstock_1409500844-1.jpg' %}" alt="">
-                    <h3>
-                        {{ user_fullname }}
-                    </h3>
+                    <h3>{{ user_fullname }}</h3>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Routine : {{ username }}</h5>
-                    <h6>
-                        {{ age }} Years Old
-                    </h6>
+                    <h6>{{ age }} Years Old</h6>
                     <p class="card-text">
-                        <span>
-                            {{gender}}
-                        </span>
-
+                        <span>{{ gender }}</span>
                     </p>
                 </div>
                 <div class="card-footer text-muted">
@@ -44,7 +71,7 @@
             </div>
         </div>
 
-        <div class="col-8">
+        <div class="">
             <form action="" method="post">
                 <br>
                 {% csrf_token %}
@@ -53,5 +80,54 @@
             </form>
         </div>
     </div>
+
+    <div class="row">
+        <h2>Goals</h2>
+        {% for goal in goals %}
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover ">
+                    <h5 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ goal.title }}</h5>
+                    <p>{{ goal.description }}</p>
+                    <p>Start Date: {{ goal.start_date }}</p>
+                    <p>End Date: {{ goal.end_date }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <h2>Routines</h2>
+        {% for routine in routines %}
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover ">
+                    <h5 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ routine.title }}</h5>
+                    <p>{{ routine.description }}</p>
+                    <p>Start Date: {{ routine.start_date }}</p>
+                    <p>End Date: {{ routine.end_date }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <h2>Activities</h2>
+        {% for activity in activities %}
+        <div class="col">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1 bg-img card-cover ">
+                    <h5 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ activity.title }}</h5>
+                    <p>{{ activity.description }}</p>
+                    <p>Start Date: {{ activity.start_date }}</p>
+                    <p>End Date: {{ activity.end_date }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}
