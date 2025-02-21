@@ -61,6 +61,11 @@ class Profile (models.Model):
     userName = models.CharField(max_length=250)
     age = models.IntegerField(default=18)
     gender = models.CharField(choices=gender_choices, max_length=6)
+    activity_score = models.IntegerField(default=0)
+    frequency_score = models.IntegerField(default=0)
+    status_score = models.IntegerField(default=0)
+    overall_score = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.userName

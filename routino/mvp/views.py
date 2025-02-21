@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, redirect
-from .forms import Routineform, GoalForm, ActivityForm, LoginForm, ProfileForm, RegisterForm
+from .forms import RoutineForm, GoalForm, ActivityForm, LoginForm, ProfileForm, RegisterForm
 from .models import Profile, Activity, Routine, Goal, Category, SubCategory, Frequency, Status
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -95,43 +95,40 @@ def home(request):
 
     return render(request, "Home.html", home_context)
 
-
 @login_required
 def profile(request):
     current_user = request.user
     profile = Profile.objects.get(user_profile=current_user)
-    profile_form = ProfileForm()
+    profile_form = ProfileForm(instance=profile)
 
-    # if request.method == 'post':
-    #     new_firstName = request.POST.get('firstName')
-    #     new_lastName = request.POST.get('lastName')
-    #     new_userName = request.POST.get('userName')
-    #     new_age = request.POST.get('age')
-    #     new_gender = request.POST.get('gender')
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, 'Profile updated successfully')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Error updating your profile')
 
-    #     profile_form = ProfileForm(request.POST, instance=profile)
-    #     if profile_form.is_valid():
-    #         profile_form.save()
+    goals = Goal.objects.filter(profile=profile)
+    routines = Routine.objects.filter(profile=profile)
+    activities = Activity.objects.filter(profile=profile)
 
-    #     post_profile_context = {
-    #         'user_fullname': f"{profile.firstName} {profile.lastName}",
-    #         'username': profile.userName,
-    #         'age': profile.age,
-    #         'gender': profile.gender,
-    #         'updated_profile': profile_form
-    #     }
-
-    #     return render(request, "Profile.html", post_profile_context)
-
-    # else:
-    #     get_profile_context = {
-    #         'user_fullname': f"{profile.firstName} {profile.lastName}",
-    #         'username': profile.userName,
-    #         'age': profile.age,
-    #         'profile_form': profile_form,
-    #         'gender': profile.gender,
-    #     }
-    #     return render(request, "Profile.html", get_profile_context)
+    get_profile_context = {
+        'user_fullname': f"{profile.firstName} {profile.lastName}",
+        'username': profile.userName,
+        'age': profile.age,
+        'profile_form': profile_form,
+        'gender': profile.gender,
+        'goals': goals,
+        'routines': routines,
+        'activities': activities,
+        'activity_score': profile.activity_score,
+        'frequency_score': profile.frequency_score,
+        'status_score': profile.status_score,
+        'overall_score': profile.overall_score,
+    }
+    return render(request, "Profile.html", get_profile_context)
 
 
 @login_required
@@ -163,26 +160,53 @@ def myProgress(request):
         request, 'MyProgress.html', context)
 
 
+@login_required
 def new_activity(request):
     if request.method == 'POST':
-        pass
+        activity_form = ActivityForm(request.POST)
+        if activity_form.is_valid():
+            activity = activity_form.save(commit=False)
+            activity.profile = request.user.user_profile
+            activity.save()
+            messages.success(request, 'New activity added successfully')
+            return redirect('user_profile')
+            # return redirect('activity_list')  # ToDo
+        else:
+            messages.error(request, 'Error adding new activity')
     else:
         activity_form = ActivityForm()
-        routine_form = Routineform()
-        goal_form = GoalForm()
 
-        return render(request, "new-activity.html", {"activity_form": activity_form})
+    return render(request, 'new-activity.html', {'activity_form': activity_form})
 
-    # elif request.method == 'POST':
-    #     activity_form = ActivityForm(request.POST)
-    #     if activity_form.is_valid() and request.user.is_authenticated:
-    #         current_user = request.user
-    #         activity = activity_form.save(commit=False)
-    #         activity.save()
-    #         'print'(request.POST)
-    #         return redirect("new-activity")
-        # else:
-        #     return HttpResponseBadRequest()
+@login_required
+def add_goal(request):
+    if request.method == 'POST':
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            # Set the profile to the currently logged-in user's profile
+            goal.profile = request.user.user_profile
+            goal.save()
+            return redirect('user_profile')
+            # return redirect('goal_list')  # ToDO
+    else:
+        form = GoalForm()
+    return render(request, 'goal_form.html', {'form': form})
+
+@login_required
+def add_routine(request):
+    if request.method == 'POST':
+        form = RoutineForm(request.POST)
+        if form.is_valid():
+            routine = form.save(commit=False)
+            # Set the routine's profile to the current user's profile
+            routine.profile = request.user.user_profile
+            routine.save()
+            return redirect('user_profile')  # Change to your desired URL name
+            # return redirect('routine_list')  # Change to your desired URL name
+    else:
+        form = RoutineForm()
+    return render(request, 'routine_form.html', {'form': form})
 
 
 def match_making(user, routine):
@@ -192,38 +216,27 @@ def match_making(user, routine):
 
     pass
 
-
 def score_calculation(request):
     profiles = Profile.objects.all()
     activities = Activity.objects.all()
-    # categories = Category.objects.all()
-    # subcategories = SubCategory.objects.all()
-    # frequencies = Frequency.objects.all()
-    # statuses = Status.objects.all()
 
-    # for profile in profiles:
-    #     for activity in activities:
-    #         for category in categories:
-    #             for subCategory in subcategories:
-    #                 for frequency in frequencies:
-    #                     for status in statuses:
-    #                         # username = profile.userName
-    #                         status_score = status.score
-    #                         category_score = category.score
-    #                         subcategory_score = subCategory.score
-    #                         frequency_score = frequency.score
-    #                         activity_score = category_score * \
-    #                             subcategory_score * status_score * frequency_score
+    for profile in profiles:
+        profile.activity_score = 0
+        profile.frequency_score = 0
+        profile.status_score = 0
+        profile.overall_score = 0
+
+        user_activities = activities.filter(profile=profile)
+        for activity in user_activities:
+            profile.activity_score += activity.score
+            profile.frequency_score += activity.frequency.score
+            profile.status_score += activity.status.score
+
+        profile.overall_score = profile.activity_score + profile.frequency_score + profile.status_score
 
     score_context = {
         'profiles': profiles,
         'activities': activities,
-        # 'category_score': category_score,
-        # 'sub_category_score': subcategory_score,
-        # 'status_score': status_score,
-        # 'frequency_score': frequency_score,
-        # 'activity_score': activity_score
     }
 
-    return render(
-        request, 'LeaderBoard.html', score_context)
+    return render(request, 'LeaderBoard.html', score_context)
