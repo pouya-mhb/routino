@@ -5,14 +5,20 @@ from django.forms.models import ModelForm
 from .models import Profile, Activity, Routine, Goal
 
 
-class ActivityForm(forms.Form):
+class ActivityForm(ModelForm):
     class Meta():
         model = Activity
         fields = [
+            'profile',
+            'category',
+            'type',
+            'status',
+            'frequency',
             'title',
             'start_date',
             'end_date',
-            'desciption'
+            'description',
+            'score'
         ]
 
 
@@ -63,20 +69,15 @@ class LoginForm(ModelForm):
         ]
 
 
-class Routineform (ModelForm):
+class RoutineForm (ModelForm):
     class Meta():
         model = Routine
-        fields = [
-            'activity',
-            'title',
-            'description'
-        ]
+        fields =  ['activity', 'title', 'start_date', 'end_date', 'description']
 
 
 class GoalForm (ModelForm):
     class Meta():
         model = Goal
         fields = [
-            'title',
-            'description'
+            'routine', 'category', 'subCategory', 'status', 'activity', 'title', 'start_date', 'end_date', 'description'
         ]
